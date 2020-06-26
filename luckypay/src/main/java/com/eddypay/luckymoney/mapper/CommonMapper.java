@@ -1,4 +1,4 @@
-package com.eddypay.luckypay.mapper;
+package com.eddypay.luckymoney.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 

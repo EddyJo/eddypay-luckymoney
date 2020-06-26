@@ -1,8 +1,8 @@
-package com.eddypay.luckypay.controller;
+package com.eddypay.luckymoney.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.eddypay.luckypay.service.CommonService;
+import com.eddypay.luckymoney.service.CommonService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
