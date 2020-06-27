@@ -27,5 +27,67 @@
 		    (#{seq}, #{userId}, #{roomId}, #{dividedLuckyMoney}, #{recvYn}, #{regDt}, #{regTm})
 	</insert>
 	
+	<select id="getLuckyMoneyInfo" parameterType="com.eddypay.luckymoney.mapper.vo.ReqLuckyMoneyVO" resultType="com.eddypay.luckymoney.mapper.vo.ReqLuckyMoneyVO">
+		SELECT
+			seq as "seq",
+			user_id as "userId",
+			room_id as "roomId",
+			token as "token",
+			lucky_money_amt as "luckyMoneyAmt",
+			lucky_money_target_cnt as "luckyMoneyTargetCnt",
+			reg_dt as "regDt",
+			reg_tm as "regTm"
+		FROM lucky_money
+		WHERE TOKEN = #{token}
+		AND ROOM_ID = #{roomId}
+		
+	</select>
+	
+	<select id="getDividedLuckyMoneyInfo" parameterType="com.eddypay.luckymoney.mapper.vo.ReqLuckyMoneyVO" resultType="com.eddypay.luckymoney.mapper.vo.DividedLuckyMoneyVO">
+	select 
+		rownum as "rownum",
+		seq as "seq",
+	    userId as "userId",
+	    roomId as "roomId",
+	    dividedLuckyMoney as "dividedLuckyMoney",
+	    recvUserId as "recvUserId",
+	    recvYn as "recvYn",
+	    recvDt as "recvDt",
+	    recvTm as "recvTm",
+	    regDt as "regDt",
+	    regTm as "regTm"
+	from (
+		SELECT 
+			@rownum:=@rownum+1 as "rownum",
+			seq as "seq",
+			user_id as "userId",
+			room_id as "roomId",
+			divided_lucky_money as "dividedLuckyMoney",
+			recv_user_id as "recvUserId",
+			recv_yn as "recvYn",
+			recv_dt as "recvDt",
+			recv_tm as "recvTm",
+			reg_dt as "regDt",
+			reg_tm as "regTm"
+		FROM divided_lucky_money, (SELECT @rownum:=0) R
+	    where seq = #{seq}
+	    and user_id = #{userId}
+	    and room_id = #{roomId}
+	    and recv_yn = 'N'
+	) t
+	WHERE rownum = 1
+	</select>
+	
+	<update id="updateDividedLuckyMoneyInfo" parameterType="com.eddypay.luckymoney.mapper.vo.DividedLuckyMoneyVO">
+		UPDATE DIVIDED_LUCKY_MONYE
+		SET recv_yn = #{recvYn},
+			recv_dt = #{recvDt},
+			recv_tm = #{recvTm},
+			recv_user_id = #{recvUserId}
+		WHERE seq = #{seq}
+		AND user_id = #{userId}
+		AND room_id = #{roomId}
+		AND divided_lucky_money = #{dividedLuckyMoney}
+	</update>
 	
 </mapper>

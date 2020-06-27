@@ -1,7 +1,5 @@
 use luckypay;
 
-select * from LUCKY_MONEY;
-DROP TABLE LUCKY_MONEY;
 CREATE TABLE LUCKY_MONEY
 			( seq int(10),
 			  user_id VARCHAR(30) not null,

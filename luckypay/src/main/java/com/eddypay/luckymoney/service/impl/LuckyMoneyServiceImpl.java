@@ -61,9 +61,53 @@ public class LuckyMoneyServiceImpl implements LuckyMoneyService {
 	
 	@Override
 	public RecvLuckyMoneyVO recevieLuckyMoney(ReqLuckyMoneyVO reqLuckyMoneyVO) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		log.debug("REQ : {}", reqLuckyMoneyVO);
+		
+		RecvLuckyMoneyVO recv = null;
+		setReqDtTm(reqLuckyMoneyVO);
+		ReqLuckyMoneyVO luckyMoneyInfo = searchLuckyMoney(reqLuckyMoneyVO);
+		
+		if(luckyMoneyInfo.getUserId().equals(reqLuckyMoneyVO.getUserId())) {
+			recv = RecvLuckyMoneyVO.builder()
+									.resultCode("9999")
+									.resultMsg("본인이 뿌리기한 건은 받을 수 없습니다.")
+									.build(); 
+		} else {
+			//받기 처리
+			reqLuckyMoneyVO.setSeq(luckyMoneyInfo.getSeq());
+			reqLuckyMoneyVO.setRecvUserId(reqLuckyMoneyVO.getUserId());
+			reqLuckyMoneyVO.setUserId(luckyMoneyInfo.getUserId());
+			DividedLuckyMoneyVO divideLuckyMoneyVO = getLuckyMoney(reqLuckyMoneyVO);
+			
+			recv = RecvLuckyMoneyVO.builder()
+									.dividedLuckyAmt(divideLuckyMoneyVO.getDividedLuckyMoney())
+									.resultCode("0000")
+									.resultMsg("성공")
+									.build();
+			
+			
+			
+		}
+		return recv;
 	}
+
+	private ReqLuckyMoneyVO searchLuckyMoney(ReqLuckyMoneyVO reqLuckyMoneyVO) {
+		ReqLuckyMoneyVO luckyMoneyInfo = luckyMoneyMapper.getLuckyMoneyInfo(reqLuckyMoneyVO);
+		
+		return luckyMoneyInfo;
+	}
+	
+	private DividedLuckyMoneyVO getLuckyMoney(ReqLuckyMoneyVO reqLuckyMoneyVO) {
+		DividedLuckyMoneyVO dividedLuckyMoneyVO = luckyMoneyMapper.getDividedLuckyMoneyInfo(reqLuckyMoneyVO);
+		dividedLuckyMoneyVO.setRecvDt(reqLuckyMoneyVO.getRegDt());
+		dividedLuckyMoneyVO.setRecvTm(reqLuckyMoneyVO.getRegTm());
+		dividedLuckyMoneyVO.setRecvYn("Y");
+		dividedLuckyMoneyVO.setRecvUserId(reqLuckyMoneyVO.getRecvUserId());
+		luckyMoneyMapper.updateDividedLuckyMoneyInfo(dividedLuckyMoneyVO);
+		return dividedLuckyMoneyVO;
+	}
+
 
 	@Override
 	public MyLuckyMoneyVO getLuckyMoneyInfo(ReqLuckyMoneyVO reqLuckyMoneyVO) {

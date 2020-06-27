@@ -12,4 +12,9 @@ public interface LuckyMoneyMapper {
 	public Integer getSeqOfLuckyMoneySeq(ReqLuckyMoneyVO reqLuckyMoneyVO);
 	public void insertLuckyMoneyInfo(ReqLuckyMoneyVO reqLuckyMoneyVO);
 	public void insertDividedLuckyMoneyInfo(DividedLuckyMoneyVO dividedLuckyMoneyVO);
+	
+	public ReqLuckyMoneyVO getLuckyMoneyInfo(ReqLuckyMoneyVO reqLuckyMoneyVO);
+	public DividedLuckyMoneyVO getDividedLuckyMoneyInfo(ReqLuckyMoneyVO reqLuckyMoneyVO);
+	public void updateDividedLuckyMoneyInfo(DividedLuckyMoneyVO dividedLuckyMoneyVO);
+	
 }

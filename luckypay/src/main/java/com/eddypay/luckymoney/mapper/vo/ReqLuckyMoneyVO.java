@@ -11,11 +11,13 @@ public class ReqLuckyMoneyVO {
 	private int seq;
 	private String token;
 	private String userId;
+	private String recvUserId;
 	private String roomId;
 	private long luckyMoneyAmt;
 	private int luckyMoneyTargetCnt;
 	private String regDt;
 	private String regTm;
 	private Long[] dividedAmts;
+
 	
 }
