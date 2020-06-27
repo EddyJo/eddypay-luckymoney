@@ -57,7 +57,12 @@
             <scope>test</scope>
         </dependency>
         <!-- end::tests[] -->
-
+       <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
           <!-- MySQL -->
         <dependency>
             <groupId>mysql</groupId>
@@ -104,8 +109,16 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<dependencies>
+			        <dependency>
+			            <groupId>org.springframework</groupId>
+			            <artifactId>springloaded</artifactId>
+			            <version>1.2.5.RELEASE</version>
+			        </dependency>
+			    </dependencies>
 			</plugin>
 		</plugins>
+		
 	</build>
 
 </project>

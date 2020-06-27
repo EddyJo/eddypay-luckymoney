@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.eddypay.luckymoney.mapper.LuckyMoneyMapper">
+ 
+
+
+	<select id="getSeqOfLuckyMoneySeq" parameterType="com.eddypay.luckymoney.mapper.vo.ReqLuckyMoneyVO" resultType="java.lang.Integer">
+		SELECT count(1)
+		FROM lucky_money 
+		WHERE user_id = #{userId} 
+		AND room_id = #{roomId}
+	</select>
+	
+	
+	<insert id="insertLuckyMoneyInfo" parameterType="com.eddypay.luckymoney.mapper.vo.ReqLuckyMoneyVO">
+		INSERT INTO lucky_money
+    		(seq, user_id, room_id, token, lucky_money_amt, lucky_money_target_cnt, reg_dt, reg_tm)
+    	VALUES
+    		(#{seq}, #{userId}, #{roomId}, #{token}, #{luckyMoneyAmt}, #{luckyMoneyTargetCnt}, #{regDt}, #{regTm})
+	</insert>
+	
+	<insert id="insertDividedLuckyMoneyInfo" parameterType="com.eddypay.luckymoney.mapper.vo.DividedLuckyMoneyVO">
+		INSERT INTO divided_lucky_money
+	    	(seq, user_id, room_id, divided_lucky_money, recv_yn, reg_dt, reg_tm)
+		VALUES
+		    (#{seq}, #{userId}, #{roomId}, #{dividedLuckyMoney}, #{recvYn}, #{regDt}, #{regTm})
+	</insert>
+	
+	
+</mapper>
